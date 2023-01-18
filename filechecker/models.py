@@ -5,6 +5,8 @@ from users.models import User
 
 class File(models.Model):
 
+    # статусы new done process updated
+
     name = models.CharField(max_length=100, verbose_name='Название')
 
     owner = models.ForeignKey(User,
@@ -43,7 +45,9 @@ class Logs(models.Model):
                                       blank=True,
                                       verbose_name='Дата создания')
 
-    text = models.CharField(max_length=800, verbose_name='Текст')
+    text = models.TextField(verbose_name='Текст')
+    is_send = "отправлено ли"
+    is_success = "Всё ли в порядке с файлами"
 
     class Meta:
         verbose_name = 'Лог'

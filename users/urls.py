@@ -1,11 +1,10 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
-from users import views
-from users.views import login, RegisterUser, LoginUser
+from users.views import RegisterUser, LoginUser, logout_user, home
 
 urlpatterns = [
-    path('', views.home, name="home"),
+    path('', home, name="home"),
     path('login/', LoginUser.as_view(), name="login"),
-    path('register/', RegisterUser.as_view(), name="register")
+    path('register/', RegisterUser.as_view(), name="register"),
+    path('logout/', logout_user, name='logout'),
 ]
