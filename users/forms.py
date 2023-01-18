@@ -25,16 +25,16 @@ class StyleFormMixin:
                 field.widget.attrs['class'] = 'form-control'
 
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'password1', 'password2')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #
+    #     for name, field in self.fields.items():
+    #         field.widget.attrs.update({'class': 'input'})
 
 
 class CustomAuthenticationForm(StyleFormMixin, AuthenticationForm):

@@ -1,0 +1,55 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Offcanvas template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/offcanvas.css' %}" rel="stylesheet">
+</head>
+
+<body class="bg-light" data-new-gr-c-s-check-loaded="14.1093.0" data-gr-ext-installed="">
+
+
+<main role="main" class="container">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">{{ form.as_p }}</strong>
+                </p>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>
+            </div>
+        </div>
+
+    </form>
+</main>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" preserveAspectRatio="none"
+     style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
+    <defs>
+        <style type="text/css"></style>
+    </defs>
+    <text x="0" y="2" style="font-weight:bold;font-size:2pt;font-family:Arial, Helvetica, Open Sans, sans-serif">32x32
+    </text>
+</svg>
+</body>
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>

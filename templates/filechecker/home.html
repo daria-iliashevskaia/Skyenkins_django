@@ -28,14 +28,14 @@
                             class="sr-only">(Вы)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                    <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                    <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                    <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
                 </li>
             {% endif %}
         </ul>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-header">
                         {% if request.user.is_authenticated %}
-                            <h1>список файлов</h1>
+                            <h1>Список файлов</h1>
                             </div>
                             <div class="card-body">
                             <table class="table">
@@ -60,11 +60,16 @@
                             </tr>
                             {% for item in object_list %}
                                 <tr>
-                                    <td>{{ item.name }}</td>
+                                    <td>
+                                        <a class="nav-link" href="{% url 'showfile' item.pk %}">
+                                        {{ item.name }}
+                                        </a>
+                                    </td>
                                     <td>{{ item.get_status_display }}</td>
                                     <td>{{ item.created_at }}</td>
                                 </tr>
                             {% endfor %}
+                            <a class="nav-link" href="{% url 'addfile' %}">Загрузить новый файл</a>
                         {% else %}
                             <h1>Зарегистрируйтесь или авторизуйтесь, чтобы начать работу</h1>
 

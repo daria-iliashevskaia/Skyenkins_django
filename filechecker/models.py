@@ -3,9 +3,17 @@ from django.core.validators import FileExtensionValidator
 from users.models import User
 
 
-class File(models.Model):
+class FileStatuses:
 
-    # статусы new done process updated
+    NEW = "new"
+    DONE = "done"
+    PROCESSED = "processed"
+    UPDATE = "update"
+
+    STATUS = [(NEW, "new"), (DONE, "done"), (PROCESSED, "processed"), (UPDATE, "update")]
+
+
+class File(models.Model):
 
     name = models.CharField(max_length=100, verbose_name='Название')
 
@@ -22,13 +30,15 @@ class File(models.Model):
                                       blank=True,
                                       verbose_name='Дата создания')
 
-    is_checked = models.BooleanField(default=False,
-                                     verbose_name='Проверено')
+    status = models.CharField(max_length=100,
+                              choices=FileStatuses.STATUS,
+                              default=FileStatuses.NEW,
+                              verbose_name='Статус')
 
     class Meta:
         verbose_name = 'Файл'
         verbose_name_plural = 'Файлы'
-        ordering = ['is_checked']
+        ordering = ['status']
 
     def __str__(self):
         return self.name

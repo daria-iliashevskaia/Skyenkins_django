@@ -7,10 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Регистрация</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
@@ -18,20 +18,16 @@
 </head>
 
 <body class="text-center" data-new-gr-c-s-check-loaded="14.1093.0" data-gr-ext-installed="">
-<form class="form-signin" method="POST">
+<form class="form-signin" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
          height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Введите почту и пароль</h1>
-
+    <h1 class="h3 mb-3 font-weight-normal">Загрузите файл</h1>
     {{ form.as_p }}
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-    <a class="nav-link" href="{% url 'users:register' %}">Зарегистрироваться</a>
-
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Загрузить</button>
+    <a class="nav-link" href="{% url 'home' %}">Назад</a>
 </form>
-
-
 </body>
+
 <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>
