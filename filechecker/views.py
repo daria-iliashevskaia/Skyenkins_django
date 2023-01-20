@@ -41,22 +41,15 @@ class UpdateFile(UpdateView):
     model = File
     success_url = reverse_lazy('home')
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         file = form.save(commit=False)
-    #         file.status = FileStatuses.UPDATE
-    #         file.save()
-    #
-    #     return redirect(self.success_url)
-
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
 
-        self.status = FileStatuses.UPDATE
+        if self.form_valid:
+
+            self.object.status = FileStatuses.UPDATE
+            self.object.save()
 
         return redirect(self.success_url)
-
 
 
 class DeleteFile(DeleteView):
