@@ -43,6 +43,11 @@ class File(models.Model):
     def __str__(self):
         return self.name
 
+    def delete(self, *args, **kwargs):
+        storage, path = self.file.storage, self.file.path
+        super().delete(*args, **kwargs)
+        storage.delete(path)
+
 
 class Logs(models.Model):
 
