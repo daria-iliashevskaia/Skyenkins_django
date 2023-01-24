@@ -1,47 +1,72 @@
-services:
+version: '3.8'
 
+volumes:
+  postgres_data:
+  app:
+  celery:
+  celery-beat:
+
+networks:
+  main:
+
+services:
   postgres:
         image: postgres:14.6-alpine
+        ports:
+          - "5433:5432"
         volumes:
-            -postgres_data:/var/lib/postgresql/data
+            - ./postgres_data:/var/lib/postgresql/data
+        networks:
+          - main
 
 
   redis-app:
     image: redis
-    restart: always
-    container_name: 'demo_app_redis'
-    command: redis-server
     ports:
       - '6379:6379'
+    restart: always
+#    command: redis-server
+    networks:
+      - main
 
   app:
     build: .
     volumes:
       - .:/app
     restart: always
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
+    depends_on:
+      - postgres
+    networks:
+      - main
 
   celery:
     build: .
+    restart: always
     command: ['celery', '--workdir=.', '-A', 'worker', '-l', 'INFO']
     volumes:
       - .:/app
     links:
       - redis
     depends_on:
+      - postgres
       - app
       - redis-app
+    networks:
+      - main
 
   celery-beat:
+    restart: always
     build: .
     command: ['celery', '--workdir=.', '-A', 'beat', '-l', 'INFO']
     volumes:
       - .:/app
-    links:
-      - redis
     depends_on:
+      - postgres
       - app
       - redis-app
       - celery
+    networks:
+      - main
