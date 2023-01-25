@@ -11,29 +11,32 @@ networks:
 
 services:
   postgres:
-        image: postgres:14.6-alpine
-        ports:
-          - "5433:5432"
-        volumes:
-            - ./postgres_data:/var/lib/postgresql/data
-        networks:
-          - main
+    image: postgres:14.6-alpine
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./.env
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - main
 
 
-  redis-app:
+  redis:
     image: redis
     ports:
       - '6379:6379'
     restart: always
-#    command: redis-server
     networks:
       - main
 
   app:
     build: .
     volumes:
-      - .:/app
+      - ./:/app
     restart: always
+    env_file:
+      - ./.env
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
@@ -45,28 +48,30 @@ services:
   celery:
     build: .
     restart: always
-    command: ['celery', '--workdir=.', '-A', 'worker', '-l', 'INFO']
+    command: celery -A Skyenkins_django worker -l info
     volumes:
-      - .:/app
-    links:
-      - redis
+      - ./:/app
+    env_file:
+      - ./.env
     depends_on:
       - postgres
       - app
-      - redis-app
+      - redis
     networks:
       - main
 
   celery-beat:
     restart: always
     build: .
-    command: ['celery', '--workdir=.', '-A', 'beat', '-l', 'INFO']
+    command: celery -A Skyenkins_django beat -l info
     volumes:
-      - .:/app
+      - ./:/app
+    env_file:
+      - ./.env
     depends_on:
       - postgres
       - app
-      - redis-app
+      - redis
       - celery
     networks:
       - main

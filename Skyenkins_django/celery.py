@@ -6,8 +6,8 @@ from celery.schedules import crontab
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Skyenkins_django.settings')
 
-app = Celery('Skyenkins_django', broker='redis://localhost:6379/0',
-             backend='redis://localhost:6379/0', include=['filechecker.tasks'])
+app = Celery('Skyenkins_django', broker='redis://redis:6379/0',
+             backend='redis://redis:6379/0', include=['filechecker.tasks'])
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

@@ -15,21 +15,20 @@ def file_check():
     file_list = File.objects.filter(status__in=["new", "update"])
 
     for file in file_list:
-        path = settings.BASE_DIR / file.file.path.replace("/", "\\")
-        print(path)
-        # result = subprocess.run(['flake8', file.file.url], stdout=subprocess.PIPE).stdout.decode('utf-8')
-        # try:
-        #     log = Logs.objects.get(file=file)
-        #     log.text = result
-        #     log.save()
-        #
-        # except Exception as ex:
-        #     Logs.objects.create(file=file, text=result)
-        #
-        # file.status = FileStatuses.DONE
-        # file.save()
-        #
-        # send_mail.delay(file.pk)
+
+        result = subprocess.run(['flake8', file.file.url], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        try:
+            log = Logs.objects.get(file=file)
+            log.text = result
+            log.save()
+
+        except Exception as ex:
+            Logs.objects.create(file=file, text=result)
+
+        file.status = FileStatuses.DONE
+        file.save()
+
+        send_mail.delay(file.pk)
 
 
 @shared_task()
