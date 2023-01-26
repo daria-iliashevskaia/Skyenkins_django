@@ -61,8 +61,7 @@ class Logs(models.Model):
                                       verbose_name='Дата создания')
 
     text = models.TextField(verbose_name='Текст')
-    is_send = "отправлено ли"
-    is_success = "Всё ли в порядке с файлами"
+    send_mail = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Лог'

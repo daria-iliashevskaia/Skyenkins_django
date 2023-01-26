@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Offcanvas template for Bootstrap</title>
+    <title>Skyenkins</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/">
 
@@ -25,23 +25,23 @@
     <div class="my-3 p-3 bg-white rounded box-shadow">
         <div class="media text-muted pt-3">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ object.name }}</strong>
+                <strong class="d-block text-gray-dark">{{ object.file.name }}</strong>
 
             </p>
         </div>
         <div class="media text-muted pt-3">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ object.created_at }}</strong>
+                <strong class="d-block text-gray-dark">{{ object.file.created_at }}</strong>
             </p>
         </div>
         <div class="media text-muted pt-3">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ object.status }}</strong>
+                <strong class="d-block text-gray-dark">{{ object.file.status }}</strong>
             </p>
         </div>
         <div class="media text-muted pt-3">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">Место для логов</strong>
+                <strong class="d-block text-gray-dark">{{object.text}}</strong>
             </p>
         </div>
         <tr>

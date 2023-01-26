@@ -16,7 +16,7 @@ def file_check():
 
     for file in file_list:
 
-        result = subprocess.run(['flake8', file.file.url], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        result = subprocess.run(['flake8', file.file.path], stdout=subprocess.PIPE).stdout.decode('utf-8')
         try:
             log = Logs.objects.get(file=file)
             log.text = result
@@ -28,16 +28,19 @@ def file_check():
         file.status = FileStatuses.DONE
         file.save()
 
-        send_mail.delay(file.pk)
+        send_email.delay(file.pk)
 
 
 @shared_task()
-def send_mail(pk):
-    file_log = get_object_or_404(Logs, file=pk)
+def send_email(pk):
+    log = Logs.objects.get(file_id=pk)
+    log.send_mail = 1
+    log.save()
 
     send_mail(
         subject='Ваш файл проверен',
-        message=file_log.text,
+        message=log.text,
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=settings.EMAIL_HOST_USER
+        recipient_list=[log.file.owner.email]
     )
+
